@@ -1,0 +1,433 @@
+<meta charset="utf-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Courier+Prime:wght@400;700&family=Kalam:wght@400;700&family=Permanent+Marker&display=swap">
+<style>
+/* Layout: one spiral notepad sheet on a desk, light only by design. Text sits on blue rules every --line px; the summary is a
+   taped index card, warnings are sticky notes, diagrams are pencil sketches taped onto the page. Phone: one column.
+   Tablet: one wider column, stamp beside the title. Desktop: summary and tabs on the left, notes on the right. */
+:root {
+  --desk: #d7dde4;
+  --paper: #fffefa;
+  --rule: #cadcee;
+  --margin-line: #f2a7a2;
+  --ink: #1f3d8c;
+  --pencil: #57544c;
+  --red-pen: #c2332c;
+  --card: #ffffff;
+  --card-rule: #dae7f4;
+  --card-top: #e98b84;
+  --shade: #ffe7a3;
+  --sticky: #fff0a6;
+  --sticky-ink: #3a3320;
+  --tape: rgba(214, 196, 150, .6);
+  --shadow: rgba(36, 44, 60, .2);
+  --ring: #8b9099;
+  --hl: rgba(255, 228, 64, .55);
+  --yes: #2e7a32; --hl-yes: rgba(112, 212, 122, .42);
+  --partly: #a35f00; --hl-partly: rgba(255, 190, 60, .45);
+  --off: #4a55a6; --hl-off: rgba(150, 168, 255, .36);
+  --no: #c2332c; --hl-no: rgba(255, 120, 112, .4);
+  --grain: .5;
+  --line: 30px;
+  --gutter: 64px;
+  --hand: "Kalam", "Segoe Print", "Bradley Hand", "Comic Sans MS", cursive;
+  --marker: "Permanent Marker", "Kalam", "Segoe Print", cursive;
+  --sketch: "Architects Daughter", "Kalam", "Segoe Print", cursive;
+  --typed: "Courier Prime", "Courier New", ui-monospace, monospace;
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+html { background: var(--desk); }
+body {
+  background: var(--desk); color: var(--ink); margin: 0;
+  font: 400 18px/var(--line) var(--hand);
+  padding-block: 34px 64px; padding-inline: 16px;
+  -webkit-text-size-adjust: 100%;
+}
+table { font: inherit; }
+
+.sheet {
+  position: relative; max-width: 860px; margin: 0 auto;
+  padding: calc(var(--line) * 3) 28px calc(var(--line) * 2) calc(var(--gutter) + 18px);
+  background-color: var(--paper);
+  background-image:
+    radial-gradient(circle at 14px 10px, var(--desk) 4.5px, transparent 5.2px),
+    linear-gradient(90deg, transparent calc(var(--gutter) - 4px), var(--margin-line) calc(var(--gutter) - 4px) calc(var(--gutter) - 2.5px), transparent calc(var(--gutter) - 2.5px) var(--gutter), var(--margin-line) var(--gutter) calc(var(--gutter) + 1.5px), transparent calc(var(--gutter) + 1.5px)),
+    repeating-linear-gradient(180deg, transparent 0 calc(var(--line) - 1.5px), var(--rule) calc(var(--line) - 1.5px) var(--line));
+  background-size: 28px 30px, auto, auto;
+  background-repeat: repeat-x, no-repeat, repeat;
+  background-position: 22px 0, 0 0, 0 -5px;
+  box-shadow: 0 1px 1px var(--shadow), 0 18px 40px -18px var(--shadow);
+  border-radius: 3px 3px 6px 6px;
+}
+.sheet::before { /* spiral coil */
+  content: ""; position: absolute; top: -11px; left: 22px; right: 22px; height: 30px; pointer-events: none;
+  background: var(--ring);
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='30'%3E%3Crect x='10' y='1.5' width='8' height='20' rx='4' fill='none' stroke='%23000' stroke-width='2.4'/%3E%3C/svg%3E") 0 0 / 28px 30px repeat-x;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='30'%3E%3Crect x='10' y='1.5' width='8' height='20' rx='4' fill='none' stroke='%23000' stroke-width='2.4'/%3E%3C/svg%3E") 0 0 / 28px 30px repeat-x;
+}
+.sheet::after { /* paper grain */
+  content: ""; position: absolute; inset: 0; pointer-events: none; border-radius: inherit; opacity: var(--grain);
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .45 0 0 0 0 .42 0 0 0 0 .36 0 0 0 .09 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+h1, h2, h3, p, ul, ol, figure { margin: 0; }
+h1 { font: 400 clamp(34px, 7vw, 50px)/calc(var(--line) * 2) var(--marker); letter-spacing: .01em; text-wrap: balance; }
+h2 { font: 700 26px/calc(var(--line) * 2) var(--hand); margin-top: var(--line); text-wrap: balance; }
+h2 span { background: linear-gradient(176deg, transparent 52%, var(--hl) 52% 86%, transparent 86%); padding: 0 .2em; margin-left: -.2em; -webkit-box-decoration-break: clone; box-decoration-break: clone; }
+h3 { font: 700 21px/var(--line) var(--hand); margin-top: var(--line); }
+p, ul, ol, .snap { margin-bottom: var(--line); }
+ul, ol { padding-left: 1.3em; }
+li::marker { color: var(--pencil); }
+li > ul, li > ol { margin-bottom: 0; }
+p:has(+ ul), p:has(+ ol) { margin-bottom: 0; }
+li:has(> .st.bare:first-child) { list-style: none; }
+li:has(> .st.bare:first-child) > .st:first-child { margin-left: -1.3em; }
+ol { list-style: none; counter-reset: step; padding-left: 38px; }
+ol > li { counter-increment: step; position: relative; }
+ol > li::before {
+  content: counter(step); position: absolute; left: -34px; top: 3px; width: 23px; height: 23px;
+  display: grid; place-items: center; font: 700 13px/1 var(--hand); color: var(--ink);
+  border: 1.6px solid currentColor; border-radius: 52% 46% 55% 47% / 48% 55% 45% 52%;
+}
+strong { font-weight: 700; }
+em { font-style: normal; font-weight: 700; }
+a { color: inherit; text-decoration-color: var(--margin-line); text-underline-offset: 3px; }
+a:focus-visible { outline: 2px dashed var(--ink); outline-offset: 3px; border-radius: 4px; }
+code { font-family: var(--typed); font-size: .78em; color: var(--pencil); overflow-wrap: anywhere; }
+pre { white-space: pre-wrap; font: 400 14px/var(--line) var(--typed); color: var(--pencil); margin: 0 0 var(--line); }
+hr { border: 0; height: var(--line); margin: 0; }
+
+/* header */
+.top { position: relative; }
+.doodle { display: block; width: min(320px, 70%); height: 14px; color: var(--margin-line); margin-top: -10px; }
+.stamp {
+  position: relative; display: inline-grid; transform: rotate(-2deg); margin-top: 4px; gap: 2px; text-align: center; padding: 7px 12px 6px;
+  font: 700 11px/1.35 var(--typed); letter-spacing: .07em; text-transform: uppercase; color: var(--red-pen);
+  border: 2.4px solid currentColor; border-radius: 7px; opacity: .88;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='g'%3E%3CfeTurbulence baseFrequency='.55' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -2.2 1.7'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='g'%3E%3CfeTurbulence baseFrequency='.55' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -2.2 1.7'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+}
+.stamp b { font-size: 13px; letter-spacing: .1em; }
+.stamp span { font-weight: 400; text-transform: none; letter-spacing: .02em; }
+
+/* index tabs */
+.tabs { display: flex; flex-wrap: wrap; gap: 8px 6px; }
+.tabs a {
+  font: 700 15px/1 var(--hand); text-decoration: none; color: var(--ink); white-space: nowrap;
+  padding: 7px 11px 5px; background: var(--card); border: 1.5px solid var(--pencil);
+  border-radius: 12px 14px 3px 3px / 12px 12px 3px 3px; box-shadow: 0 2px 0 -1px var(--shadow);
+}
+.tabs a:nth-child(4n+1) { background: linear-gradient(var(--hl-yes), var(--hl-yes)), var(--card); }
+.tabs a:nth-child(4n+2) { background: linear-gradient(var(--hl-off), var(--hl-off)), var(--card); }
+.tabs a:nth-child(4n+3) { background: linear-gradient(var(--hl), var(--hl)), var(--card); }
+.tabs a:nth-child(4n+4) { background: linear-gradient(var(--hl-no), var(--hl-no)), var(--card); }
+
+/* index card: the one-screen summary */
+.index {
+  position: relative; margin-top: var(--line); padding: 0 22px calc(var(--line) / 2); transform: rotate(-.45deg);
+  background-color: var(--card);
+  background-image:
+    linear-gradient(180deg, transparent calc(var(--line) * 2 - 2px), var(--card-top) calc(var(--line) * 2 - 2px) calc(var(--line) * 2), transparent calc(var(--line) * 2)),
+    repeating-linear-gradient(180deg, transparent 0 calc(var(--line) - 1.5px), var(--card-rule) calc(var(--line) - 1.5px) var(--line));
+  background-position: 0 0, 0 -5px;
+  box-shadow: 0 1px 2px var(--shadow), 0 14px 26px -16px var(--shadow);
+}
+.index h2 { margin-top: 0; }
+.index > :last-child { margin-bottom: 0; }
+
+.tape::before {
+  content: ""; position: absolute; top: -13px; left: 50%; width: 104px; height: 26px; transform: translateX(-50%) rotate(-2.5deg);
+  background: var(--tape); clip-path: polygon(0 10%, 5% 0, 12% 8%, 88% 2%, 95% 9%, 100% 0, 97% 52%, 100% 100%, 90% 91%, 10% 98%, 4% 90%, 0 100%, 3% 50%);
+}
+
+.what { background: linear-gradient(178deg, transparent 48%, var(--hl) 48% 86%, transparent 86%); background-size: 100% var(--line); }
+
+.sticky {
+  position: relative; max-width: 38ch; margin: calc(var(--line) / 2) 0 calc(var(--line) / 2) auto; padding: calc(var(--line) / 2) 18px;
+  background: var(--sticky); color: var(--sticky-ink); transform: rotate(1.4deg);
+  box-shadow: 0 1px 1px var(--shadow), 6px 12px 18px -12px var(--shadow);
+  border-bottom-right-radius: 22px 6px;
+}
+.sticky strong, .sticky code { color: var(--sticky-ink); }
+
+/* status marks */
+.st { white-space: nowrap; font-weight: 700; padding: 0 .2em; border-radius: 3px 10px 4px 9px; -webkit-box-decoration-break: clone; box-decoration-break: clone; }
+.mk { width: 1.05em; height: 1.05em; vertical-align: -.18em; margin-right: .18em; fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+.st-yes { color: var(--yes); background: linear-gradient(176deg, transparent 18%, var(--hl-yes) 18% 88%, transparent 88%); }
+.st-partly { color: var(--partly); background: linear-gradient(176deg, transparent 18%, var(--hl-partly) 18% 88%, transparent 88%); }
+.st-off { color: var(--off); background: linear-gradient(176deg, transparent 18%, var(--hl-off) 18% 88%, transparent 88%); }
+.st-no { color: var(--no); background: linear-gradient(176deg, transparent 18%, var(--hl-no) 18% 88%, transparent 88%); }
+.st.bare { padding: 0; background: none; }
+
+/* tables: hand-ruled on paper, cards on phones */
+.tbl { overflow-x: auto; margin-top: calc(var(--line) / 2); }
+.tbl table { width: 100%; border-collapse: collapse; background: var(--paper); }
+.tbl th { font: 700 15px/var(--line) var(--hand); text-align: left; color: var(--pencil); padding: 0 10px; border-bottom: 2px solid var(--ink); }
+.tbl td { vertical-align: top; padding: 0 10px; border-bottom: 1px dashed var(--pencil); min-width: 7em; }
+.tbl td:first-child { font-weight: 700; }
+.proof summary { cursor: pointer; list-style: none; font: 400 13px/var(--line) var(--typed); color: var(--pencil); white-space: nowrap; }
+.proof summary::-webkit-details-marker { display: none; }
+.proof summary::before { content: "+ "; }
+.proof[open] summary::before { content: "- "; }
+.proof code { display: block; font-size: 12px; line-height: 20px; }
+
+/* sketches */
+.sketch {
+  position: relative; margin-top: calc(var(--line) / 2); padding: 22px 14px 12px; background: var(--card); overflow-x: auto;
+  box-shadow: 0 1px 2px var(--shadow), 0 14px 24px -16px var(--shadow); transform: rotate(-.35deg);
+}
+.sketch:nth-of-type(even) { transform: rotate(.4deg); }
+.sketch svg { display: block; margin: 0 auto; max-width: 100%; height: auto; }
+.sketch .pending { font: 400 15px/var(--line) var(--sketch); color: var(--pencil); text-align: center; margin: 0; }
+.sketch pre { margin: 0; }
+.sk { white-space: pre; }
+
+/* sections with a voice of their own */
+.s-docs-vs-code p, .s-docs-vs-code li { color: var(--red-pen); }
+.s-docs-vs-code h2 span { background: linear-gradient(176deg, transparent 52%, var(--hl-no) 52% 86%, transparent 86%); }
+.s-unknowns p, .s-unknowns li { color: var(--pencil); }
+
+.foot { font: 400 14px/var(--line) var(--typed); color: var(--pencil); margin-top: var(--line); }
+.raw { white-space: pre-wrap; }
+
+@media (min-width: 641px) and (max-width: 1099px) {
+  .top h1 { margin-right: 210px; }
+  .stamp { position: absolute; right: -4px; top: 2px; transform: rotate(4deg); margin-top: 0; }
+}
+@media (min-width: 1100px) {
+  .sheet { max-width: 1240px; display: grid; grid-template-columns: minmax(0, 380px) minmax(0, 1fr); column-gap: 48px; }
+  .side .tabs { position: sticky; top: 24px; }
+  .main { min-width: 0; }
+  h1 { font-size: 44px; }
+}
+@media (max-width: 640px) {
+  :root { --gutter: 30px; --line: 27px; }
+  body { font-size: 16.5px; padding-block: 28px 40px; }
+  h2 { font-size: 23px; }
+  h3 { font-size: 19px; }
+  .sheet { padding-top: calc(var(--line) * 2); padding-left: calc(var(--gutter) + 12px); padding-right: 16px; }
+  .index { padding-inline: 14px; margin-inline: -6px; }
+  .tbl { overflow: visible; }
+  .tbl table, .tbl tbody, .tbl tr, .tbl td { display: block; width: auto; }
+  .tbl table { background: none; }
+  .tbl thead { display: none; }
+  .tbl tr { background: var(--card); padding: calc(var(--line) / 2) 12px; margin-bottom: calc(var(--line) / 2); box-shadow: 0 1px 2px var(--shadow); }
+  .tbl td { border: 0; padding: 0; min-width: 0; }
+  .tbl td::before { content: attr(data-label) " "; font: 700 12px/var(--line) var(--typed); letter-spacing: .06em; text-transform: uppercase; color: var(--pencil); }
+  .tbl td[data-label="Feature"], .tbl td[data-label="Status"] { display: inline; }
+  .tbl td[data-label="Feature"]::before, .tbl td[data-label="Status"]::before { content: none; }
+  .tbl td[data-label="Status"] { margin-left: .35em; }
+  .sticky { margin-left: 0; }
+}
+</style>
+
+<main class="sheet" id="sheet"></main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/marked/18.0.14/lib/marked.umd.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.4.16/purify.min.js" defer></script>
+<script>
+(() => {
+  const SVG = "http://www.w3.org/2000/svg";
+  const STATUS = {}; // written as code points so the page survives any text encoding
+  [[0x2705, "yes"], [0x1F7E1, "partly"], [0x1F50C, "off"], [0x274C, "no"]].forEach(([c, k]) => { STATUS[String.fromCodePoint(c)] = k; });
+  const ANY = new RegExp(Object.keys(STATUS).join("|"), "u");
+  const RE = new RegExp("(" + Object.keys(STATUS).join("|") + ") *(Yes|Partly|Built, not switched on|No)?(?![A-Za-z])", "gu");
+  const NAMES = { yes: "Yes", partly: "Partly", off: "Built, not switched on", no: "No" };
+  const MARKS = {
+    yes: [["path", { d: "M3.5 12.5c2.2 1.4 3.6 3.2 5 5.8C11.6 11 15.5 6.4 20.8 3.6" }]],
+    partly: [["path", { d: "M2.8 13.6c2.6-5.2 5.9-5.3 8.6-1.4s6.2 3.9 9.8-1.6" }]],
+    off: [["rect", { x: "2.6", y: "6.8", width: "18.8", height: "10.4", rx: "5.2" }], ["circle", { cx: "8", cy: "12", r: "2.9" }]],
+    no: [["path", { d: "M5 4.6c4.6 4.8 9.4 10 14.2 14.8M19.2 4.8C13.6 9.6 9.8 14 4.8 19.6" }]]
+  };
+  let mer = null;
+
+  const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+  const make = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; };
+  const svgEl = (tag, attrs) => { const e = document.createElementNS(SVG, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); return e; };
+  const slug = s => s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") || "section";
+
+  function mark(kind) {
+    const s = svgEl("svg", { class: "mk", viewBox: "0 0 24 24", "aria-hidden": "true" });
+    MARKS[kind].forEach(([t, a]) => s.append(svgEl(t, a)));
+    return s;
+  }
+
+  function marks(root) { // status emoji -> hand-drawn mark + highlighter
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+    const hits = [];
+    while (walker.nextNode()) if (ANY.test(walker.currentNode.nodeValue)) hits.push(walker.currentNode);
+    hits.forEach(node => {
+      const text = node.nodeValue, frag = document.createDocumentFragment();
+      let last = 0;
+      text.replace(RE, (m, emoji, word, at) => {
+        frag.append(text.slice(last, at));
+        const kind = STATUS[emoji], span = make("span", "st st-" + kind + (word ? "" : " bare"));
+        span.append(mark(kind));
+        if (word) span.append(word); else span.setAttribute("aria-label", NAMES[kind]);
+        frag.append(span);
+        last = at + m.length;
+      });
+      frag.append(text.slice(last));
+      node.replaceWith(frag);
+    });
+  }
+
+  function build() {
+    const sheet = document.getElementById("sheet");
+    let md = document.getElementById("notes").value.split(String.fromCodePoint(0xFE0F)).join("");
+    const meta = {};
+    md = md.replace(/^\s*---\r?\n([\s\S]*?)\r?\n---[ \t]*\r?\n/, (_, y) => {
+      y.split(/\r?\n/).forEach(l => { const m = l.match(/^([\w-]+):\s*(.*)$/); if (m) meta[m[1]] = m[2].trim(); });
+      return "";
+    });
+    if (!window.marked || !window.DOMPurify) { sheet.append(make("pre", "raw", md)); return; }
+
+    const doc = DOMPurify.sanitize(marked.parse(md, { gfm: true }), { RETURN_DOM_FRAGMENT: true });
+
+    doc.querySelectorAll("pre > code.language-mermaid").forEach(code => {
+      const fig = make("figure", "sketch snap tape");
+      fig.dataset.src = code.textContent;
+      fig.append(make("p", "pending", "sketching…"));
+      code.parentElement.replaceWith(fig);
+    });
+    doc.querySelectorAll("table").forEach(t => {
+      const heads = [...t.querySelectorAll("thead th")].map(th => th.textContent.trim());
+      const proofCol = heads.findIndex(h => /^proof$/i.test(h));
+      t.querySelectorAll("tbody tr").forEach(tr => [...tr.children].forEach((td, i) => {
+        if (heads[i]) td.dataset.label = heads[i];
+        const files = td.querySelectorAll("code").length;
+        if (i === proofCol && files) { // file paths fold away behind "n files"
+          const d = make("details", "proof");
+          d.append(make("summary", null, files + (files === 1 ? " file" : " files")), ...td.childNodes);
+          td.append(d);
+        }
+      }));
+      const wrap = make("div", "tbl snap");
+      t.replaceWith(wrap); wrap.append(t);
+    });
+    doc.querySelectorAll("strong").forEach(s => {
+      const t = s.textContent.trim().toLowerCase(), p = s.closest("p");
+      if (!p) return;
+      if (/^don.t oversell/.test(t)) p.classList.add("sticky");
+      if (/^what it is/.test(t)) p.classList.add("what");
+    });
+
+    const header = make("header", "top snap");
+    const h1 = doc.querySelector("h1");
+    if (h1) {
+      const doodle = svgEl("svg", { class: "doodle", viewBox: "0 0 300 14", preserveAspectRatio: "none", "aria-hidden": "true" });
+      doodle.append(svgEl("path", { d: "M3 9c40-6 80-7 122-3s92 4 130-2c14-2 28-2 42 1", fill: "none", stroke: "currentColor", "stroke-width": "3", "stroke-linecap": "round" }));
+      header.append(h1, doodle);
+    }
+    const bq = doc.querySelector("blockquote"), stamp = make("div", "stamp");
+    if (meta.commit) {
+      stamp.append(make("b", null, "Checked against code"), make("span", null, (meta.branch || "?") + " @ " + meta.commit + (meta.scanned ? " · " + meta.scanned : "")), make("span", null, "not checked on the live site"));
+      if (bq && /checked against/i.test(bq.textContent)) bq.remove();
+    } else if (bq) { stamp.append(make("span", null, bq.textContent.trim())); bq.remove(); }
+    if (stamp.childNodes.length) header.append(stamp);
+
+    const intro = make("div", "intro"), sections = [];
+    let cur = null;
+    [...doc.childNodes].forEach(n => {
+      if (n.nodeName === "H2") {
+        cur = make("section");
+        cur.id = slug(n.textContent);
+        cur.className = "s-" + cur.id;
+        const span = make("span"); span.append(...n.childNodes); n.append(span);
+        sections.push(cur);
+      }
+      (cur || intro).append(n);
+    });
+    const card = sections.find(s => s.id === "on-one-screen");
+    if (card) card.classList.add("index", "tape", "snap");
+
+    const nav = make("nav", "tabs snap");
+    nav.setAttribute("aria-label", "Sections");
+    sections.filter(s => s !== card).forEach(s => { const a = make("a", null, s.querySelector("h2").textContent.trim()); a.href = "#" + s.id; nav.append(a); });
+
+    const foot = make("p", "foot", "Drawn out by draw-it-out" + (meta.scanned ? " on " + meta.scanned : "") + (meta.commit ? " from " + (meta.branch || "?") + "@" + meta.commit : "") + ".");
+
+    const side = make("div", "side"), main = make("div", "main");
+    side.append(header, ...(card ? [card] : []), nav);
+    main.append(intro, ...sections.filter(s => s !== card), foot);
+    sheet.append(side, main);
+    marks(sheet);
+    snap();
+    const jump = () => { const t = location.hash && document.getElementById(location.hash.slice(1)); if (t) t.scrollIntoView(); }; // deep links like #data-privacy
+    whenFonts().then(() => { snap(); return draw(); }).then(() => { snap(); jump(); });
+    sheet.addEventListener("toggle", snap, true);
+    let w = innerWidth;
+    addEventListener("resize", () => { if (innerWidth !== w) { w = innerWidth; requestAnimationFrame(snap); } });
+  }
+
+  function whenFonts() {
+    if (!document.fonts) return Promise.resolve();
+    const wait = Promise.all(['16px "Architects Daughter"', '18px "Kalam"', '700 18px "Kalam"', '40px "Permanent Marker"', '14px "Courier Prime"'].map(f => document.fonts.load(f)));
+    return Promise.race([wait, new Promise(r => setTimeout(r, 2500))]).catch(() => {});
+  }
+
+  async function getMermaid() { // the artifact viewer brings its own mermaid; a plain browser loads one
+    if (window.mermaid) return window.mermaid;
+    await new Promise((ok, bad) => {
+      const tag = document.createElement("script");
+      tag.src = "https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.15.0/mermaid.min.js";
+      tag.onload = ok; tag.onerror = bad;
+      document.head.append(tag);
+    });
+    window.mermaid.initialize({ startOnLoad: false, securityLevel: "strict" });
+    return window.mermaid;
+  }
+
+  function sketchConfig() { // per-diagram settings, so the viewer's shared mermaid keeps its own defaults
+    const q = v => '"' + v.replace(/"/g, "'") + '"';
+    const font = "Architects Daughter, Kalam, cursive";
+    return ["---", "config:", "  look: handDrawn", "  handDrawnSeed: 7", "  theme: base", "  fontFamily: " + q(font),
+      "  flowchart:", "    curve: basis", "  themeVariables:", "    fontFamily: " + q(font), "    fontSize: " + q("16px"),
+      "    background: " + q(css("--card")), "    primaryColor: " + q(css("--shade")), "    mainBkg: " + q(css("--shade")),
+      "    primaryBorderColor: " + q(css("--ink")), "    nodeBorder: " + q(css("--ink")), "    primaryTextColor: " + q(css("--ink")),
+      "    textColor: " + q(css("--ink")), "    lineColor: " + q(css("--ink")), "    secondaryColor: " + q(css("--card")),
+      "    tertiaryColor: " + q(css("--card")), "    clusterBkg: " + q(css("--card")), "    clusterBorder: " + q(css("--pencil")),
+      "    edgeLabelBackground: " + q(css("--card")), "---", ""].join(String.fromCharCode(10));
+  }
+
+  async function draw() { // pencil sketches from the notes' mermaid blocks
+    const figs = [...document.querySelectorAll(".sketch")];
+    if (!figs.length) return;
+    try { mer = mer || await getMermaid(); } catch (e) { mer = null; }
+    if (!mer) { figs.forEach(f => f.replaceChildren(make("pre", null, f.dataset.src))); return; }
+    const config = sketchConfig();
+    for (const fig of figs) {
+      const src = fig.dataset.src, styled = /^\s*---/.test(src) ? src : config + src;
+      let drawn = false;
+      for (const text of [styled, src]) { // hand-drawn first; plain if this mermaid can't sketch that diagram type
+        const box = make("div", "sk", text);
+        fig.replaceChildren(box);
+        try { await mer.run({ nodes: [box], suppressErrors: false }); drawn = !!fig.querySelector("svg"); } catch (e) { drawn = false; }
+        if (drawn) break;
+      }
+      if (!drawn) { fig.replaceChildren(make("p", "pending", "This sketch didn't draw. Here's what it says:"), make("pre", null, src)); continue; }
+      const svg = fig.querySelector("svg"), vb = svg.viewBox && svg.viewBox.baseVal;
+      if (vb && vb.width) svg.style.minWidth = Math.round(vb.width * .75) + "px"; // shrink to fit, but never past legible; then scroll
+      const label = fig.closest("section")?.querySelector("h3, h2")?.textContent.trim();
+      fig.setAttribute("role", "img");
+      if (label) fig.setAttribute("aria-label", "Sketch: " + label);
+    }
+  }
+
+  function snap() { // land every taped-on block back on the ruled lines
+    const l = parseFloat(css("--line")) || 30;
+    document.querySelectorAll(".snap").forEach(e => {
+      e.style.marginBottom = "";
+      const cs = getComputedStyle(e);
+      const base = parseFloat(cs.marginBottom) || 0;
+      const bottom = e.offsetTop + (parseFloat(cs.height) || e.offsetHeight);
+      e.style.marginBottom = (base + Math.ceil(bottom / l - 0.001) * l - bottom) + "px";
+    });
+  }
+
+  document.addEventListener("DOMContentLoaded", build);
+})();
+</script>
+<textarea id="notes" hidden>

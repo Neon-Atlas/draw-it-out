@@ -1,0 +1,20 @@
+{
+  "name": "draw-it-out",
+  "version": "0.1.0",
+  "description": "Ask \"does my app do X?\" and get an answer checked against your code. It also keeps a one-screen cheat sheet and a hand-drawn notebook page of your app, and helps you learn it with quizzes, tours and meeting prep.",
+  "author": {
+    "name": "Alexander",
+    "url": "https://github.com/chandler-bong"
+  },
+  "homepage": "https://github.com/chandler-bong/draw-it-out",
+  "repository": "https://github.com/chandler-bong/draw-it-out",
+  "license": "MIT",
+  "keywords": [
+    "explain",
+    "codebase",
+    "documentation",
+    "diagrams",
+    "learning",
+    "onboarding"
+  ]
+}

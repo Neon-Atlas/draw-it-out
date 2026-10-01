@@ -1,0 +1,17 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "draw-it-out",
+  "description": "Answers about your own app, checked against its code.",
+  "owner": {
+    "name": "Alexander",
+    "url": "https://github.com/chandler-bong"
+  },
+  "plugins": [
+    {
+      "name": "draw-it-out",
+      "description": "Ask \"does my app do X?\" and get an answer checked against your code. It also keeps a one-screen cheat sheet and a hand-drawn notebook page of your app, and helps you learn it with quizzes, tours and meeting prep.",
+      "source": "./",
+      "category": "productivity"
+    }
+  ]
+}
