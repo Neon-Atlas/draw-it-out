@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="128" height="128" role="img" aria-label="draw-it-out logo: a pencil drawing a line">
+  <rect width="32" height="32" rx="7" fill="#FFFEFA"/>
+  <g stroke="#57544C" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round">
+    <path d="M11.5 17.5 20.5 8.5l3 3-9 9z" fill="#FFE7A3"/>
+    <path d="M20.5 8.5l2-2 3 3-2 2z" fill="#C2332C"/>
+    <path d="M11.5 17.5 9.5 22.5l5-2z" fill="#FFFEFA"/>
+    <path d="M6 26.5c2.2-1.8 4.2 1.4 6.6 0s4.4-1.4 6.8 0 4.2 1 6.1-.4" fill="none" stroke="#4A55A6"/>
+  </g>
+</svg>

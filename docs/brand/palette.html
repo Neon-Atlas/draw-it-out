@@ -1,0 +1,28 @@
+<!doctype html>
+<!-- Source for docs/palette.png. Rebuild from the repo root. Chrome needs absolute paths; in Git Bash on Windows use R=$(pwd -W) and file:///$R instead. R=$PWD; chrome --headless=new --screenshot="$R/docs/palette.png" --window-size=1280,250 --force-device-scale-factor=2 --hide-scrollbars --virtual-time-budget=8000 "file://$R/docs/brand/palette.html" -->
+<meta charset="utf-8">
+<title>draw-it-out palette</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&family=Kalam:wght@400;700&display=block">
+<style>
+:root { --desk: #d7dde4; --card: #ffffff; --pencil: #57544c; --ink: #1f3d8c; --tape: rgba(214, 196, 150, .6); --shadow: rgba(36, 44, 60, .2); }
+html, body { margin: 0; width: 1280px; height: 250px; overflow: hidden; background: var(--desk); }
+.row { display: flex; gap: 22px; padding: 40px 30px 0; }
+.card { position: relative; flex: 1; background: var(--card); padding: 14px 14px 12px; box-shadow: 0 1px 2px var(--shadow), 0 14px 26px -16px var(--shadow); }
+.card:nth-child(odd) { transform: rotate(-.8deg); }
+.card:nth-child(even) { transform: rotate(.7deg); }
+.card::before {
+  content: ""; position: absolute; top: -12px; left: 50%; width: 76px; height: 24px; transform: translateX(-50%) rotate(-2.5deg); background: var(--tape);
+  clip-path: polygon(0 10%, 5% 0, 12% 8%, 88% 2%, 95% 9%, 100% 0, 97% 52%, 100% 100%, 90% 91%, 10% 98%, 4% 90%, 0 100%, 3% 50%);
+}
+.chip { height: 104px; border: 1.5px solid var(--pencil); border-radius: 6px 9px 5px 8px; }
+b { display: block; margin-top: 10px; font: 700 21px/1.2 "Kalam", cursive; color: var(--ink); }
+code { font: 400 17px/1.3 "Courier Prime", monospace; color: var(--pencil); }
+</style>
+<div class="row">
+  <div class="card"><div class="chip" style="background:#1F3D8C"></div><b>Ink</b><code>#1F3D8C</code></div>
+  <div class="card"><div class="chip" style="background:#C2332C"></div><b>Red pen</b><code>#C2332C</code></div>
+  <div class="card"><div class="chip" style="background:#FFE7A3"></div><b>Highlighter</b><code>#FFE7A3</code></div>
+  <div class="card"><div class="chip" style="background:#4A55A6"></div><b>Blue pencil</b><code>#4A55A6</code></div>
+  <div class="card"><div class="chip" style="background:#57544C"></div><b>Pencil</b><code>#57544C</code></div>
+  <div class="card"><div class="chip" style="background:#FFFEFA"></div><b>Paper</b><code>#FFFEFA</code></div>
+</div>
