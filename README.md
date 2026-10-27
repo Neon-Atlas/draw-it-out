@@ -11,7 +11,7 @@ It reads your code and tells you what the app really does. Every answer starts w
 1. Install the plugin, then start a new Claude Code session:
 
    ```text
-   /plugin marketplace add chandler-bong/draw-it-out
+   /plugin marketplace add Neon-Atlas/draw-it-out
    /plugin install draw-it-out@draw-it-out
    ```
 
