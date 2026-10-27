@@ -1,4 +1,10 @@
-# draw-it-out
+<p align="center">
+  <img src="docs/banner.png" alt="draw-it-out: ask &quot;does my app do X?&quot; and get an answer checked against your code" width="100%">
+</p>
+
+<p align="center">
+  A <a href="https://neonatlas.uk">Neon Atlas</a> product · <a href="https://neonatlas.uk/draw-it-out/">neonatlas.uk/draw-it-out</a> · MIT licensed
+</p>
 
 draw-it-out is a Claude Code plugin for people who build apps with AI, then get asked "does your app do X?" or "how does that work?" and don't know the answer.
 
@@ -69,7 +75,7 @@ Everything runs through one command. The words after it pick the job.
 |---|---|
 | `/draw-it-out` | Your one-screen cheat sheet and the page link. In a project with no notes yet, it offers to scan |
 | `/draw-it-out scan` | A full scan the first time, then an update of whatever changed. `refresh` and `update` do the same |
-| `/draw-it-out page` | A rebuilt notebook page and its link |
+| `/draw-it-out page` | A rebuilt notebook page and its link. `link` does the same |
 
 ### Learning
 
@@ -77,7 +83,7 @@ Everything runs through one command. The words after it pick the job.
 |---|---|
 | `/draw-it-out quiz` | 5 multiple-choice questions about your own app, scored at the end |
 | `/draw-it-out tour` | One feature at a time. Reply `next`, `deeper` or `stop` |
-| `/draw-it-out prep investor call` | A pitch, the 5 questions they'll probably ask, one tough question and what not to oversell |
+| `/draw-it-out prep investor call` | A pitch, the 5 questions they'll probably ask, one tough question and what not to oversell. It also works for a customer, client, partner, developer, the press or a friend |
 
 Add "for an investor", "for a developer" or "for my mum" to any question and the answer is written for that person. If another plugin already uses the name, type `/draw-it-out:draw-it-out` instead.
 
@@ -119,6 +125,35 @@ Everything the plugin writes goes through [humanizer](https://github.com/blader/
 - It won't guess costs, user numbers or security guarantees. If the code doesn't prove something, it says "not verified".
 - Scans are slow and use a lot of tokens on big repos. A 900-file app with web, iPhone and Android versions took 45 minutes. A question takes a few minutes.
 
+## Brand
+
+<img src="docs/logo.svg" alt="The draw-it-out logo: a pencil drawing a wavy line" width="96" align="right">
+
+draw-it-out looks like a spiral notepad: blue ink on ruled paper, a red margin line, highlighter on the parts that matter and pencil for the sketches. The notebook page, the banner and the logo all share it.
+
+- Logo: [docs/logo.svg](docs/logo.svg), a pencil drawing a line. It sits on a paper tile so it still reads on a dark background.
+- Banner and palette: [docs/banner.png](docs/banner.png) and [docs/palette.png](docs/palette.png), drawn from the HTML in [docs/brand](docs/brand). Each file starts with the command that rebuilds its PNG.
+
+![Six colour swatches on taped index cards: ink, red pen, highlighter, blue pencil, pencil and paper](docs/palette.png)
+
+| Colour | Hex | Used for |
+|---|---|---|
+| Ink | `#1F3D8C` | Handwriting and headings |
+| Red pen | `#C2332C` | The "checked against code" stamp, ❌ No, docs that don't match the code |
+| Highlighter | `#FFE7A3` | The boxes in diagrams |
+| Blue pencil | `#4A55A6` | 🔌 Built, not switched on, the line in the logo |
+| Pencil | `#57544C` | Outlines, code and proof paths |
+| Paper | `#FFFEFA` | The page |
+
+| Font | Used for |
+|---|---|
+| [Permanent Marker](https://fonts.google.com/specimen/Permanent+Marker) | The app's name at the top of the page |
+| [Kalam](https://fonts.google.com/specimen/Kalam) | Everything handwritten |
+| [Architects Daughter](https://fonts.google.com/specimen/Architects+Daughter) | Diagram labels |
+| [Courier Prime](https://fonts.google.com/specimen/Courier+Prime) | Code, proof paths and the stamp |
+
 ## License
 
 MIT
+
+draw-it-out is not affiliated with or endorsed by Anthropic. Claude and Claude Code are trademarks of Anthropic, PBC.
